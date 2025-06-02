@@ -38,6 +38,8 @@ This is a simple Node.js server using Express framework.
 - **GET /api/users** - Retrieve all users from Firebase Realtime Database
   - Example: `GET http://localhost:3000/api/users`
 
+**Note**: The server is configured with CORS headers to allow requests from web applications like React apps running on different origins.
+
 ## Dependencies
 
 - Express.js - Web framework for Node.js
