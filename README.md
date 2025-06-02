@@ -35,6 +35,9 @@ This is a simple Node.js server using Express framework.
     - `gender`: User's gender
   - Example: `POST http://localhost:3000/api/users/John/25/Male`
 
+- **GET /api/users** - Retrieve all users from Firebase Realtime Database
+  - Example: `GET http://localhost:3000/api/users`
+
 ## Dependencies
 
 - Express.js - Web framework for Node.js
