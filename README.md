@@ -28,4 +28,8 @@ This is a simple Node.js server using Express framework.
 ## Dependencies
 
 - Express.js - Web framework for Node.js
-- Nodemon (dev) - Automatically restarts the server during development 
+- Nodemon (dev) - Automatically restarts the server during development
+
+## Note
+
+This repository was initialized on GitHub and merged with local project files.
