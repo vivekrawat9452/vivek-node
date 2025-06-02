@@ -24,10 +24,21 @@ This is a simple Node.js server using Express framework.
 ## Project Structure
 
 - `server.js` - Main server file
+- `firebaseConfig.js` - Firebase configuration file
+
+## API Endpoints
+
+- **POST /api/users/:name/:age/:gender** - Add a new user to Firebase Realtime Database and return all users
+  - Parameters:
+    - `name`: User's name
+    - `age`: User's age
+    - `gender`: User's gender
+  - Example: `POST http://localhost:3000/api/users/John/25/Male`
 
 ## Dependencies
 
 - Express.js - Web framework for Node.js
+- Firebase - For Realtime Database integration
 - Nodemon (dev) - Automatically restarts the server during development
 
 ## Note
