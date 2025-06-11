@@ -10,8 +10,9 @@ const port = process.env.PORT || 3000;
 // Enable CORS for cross-origin requests
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -34,7 +35,7 @@ app.post('/api/users/:name/:age/:gender', async (req, res) => {
     const { name, age, gender } = req.params;
     
     // Save user to Firebase Realtime Database
-    const usersRef = ref(db, 'users');
+    const usersRef = ref(db, 'NodeUsers');
     const newUserRef = push(usersRef);
     await set(newUserRef, {
       details: {
@@ -59,10 +60,54 @@ app.post('/api/users/:name/:age/:gender', async (req, res) => {
   }
 });
 
+app.post('/api/task/:name/:priority/:description', async (req, res) => {
+  try {
+    const { name, priority, description } = req.params;
+    
+    // Save user to Firebase Realtime Database
+    const usersRef = ref(db, 'NodeTask');
+    const newUserRef = push(usersRef);
+    await set(newUserRef, {
+      details: {
+        name,
+        priority,
+        description
+      }
+    });
+    
+    // Get all users from database
+    const snapshot = await get(usersRef);
+    const users = snapshot.val() || {};
+    
+    res.status(200).json({
+      message: 'User added successfully',
+      taskId: newUserRef.key,
+      allTasks: users
+    });
+  } catch (error) {
+    console.error('Error handling user data:', error);
+    res.status(500).json({ error: 'Failed to handle user data' });
+  }
+});
+app.get('/api/tasks', async (req, res) => {
+  try {
+    const usersRef = ref(db, 'NodeTask');
+    const snapshot = await get(usersRef);
+    const users = snapshot.val() || {};
+    res.status(200).json({
+      message: 'Users retrieved successfully',
+      tasks: users
+    });
+  } catch (error) {
+    console.error('Error retrieving users:', error);
+    res.status(500).json({ error: 'Failed to retrieve users' });
+  }
+});
+
 // API endpoint to get all users
 app.get('/api/users', async (req, res) => {
   try {
-    const usersRef = ref(db, 'users');
+    const usersRef = ref(db, 'NodeUsers');
     const snapshot = await get(usersRef);
     const users = snapshot.val() || {};
     res.status(200).json({
